@@ -18,8 +18,8 @@ function databaseInitialize(){
 export function loadCollection (collection){
     return new Promise(resolve=>{
         db.loadDatabase({},()=>{
-            const _collection db.getCollection(collection) || db.addCollection(collection)
-            resolve
+            const _collection = db.getCollection(collection) || db.addCollection(collection)
+            resolve(_collection)
         })
     })
 }

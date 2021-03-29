@@ -1,7 +1,36 @@
 import React, { Component } from 'react'
 import Note from './note'
+import {loadCollection,db} from '../database'
 
 class Notes extends Component{
+    constructor(props){
+        super(props)
+        this.getInitialData()
+    }
+    state = {
+        entities: []
+    }
+    getInitialData(){
+        loadCollection('notes')
+        .then((collection)=>{
+/*             collection.insert([
+                {body:'hello~'},
+                {body:'hola~'}
+            ])
+
+            db.saveDatabase() */
+            const entities = collection.chain()
+            .find()
+            .simplesort('$loki','isdesc')
+            .data()
+
+            this.setState({
+                entities
+            })
+
+           console.log(entities)
+        })
+    }
     render(){
         return(
             <div className="ui container notes">
